@@ -36,7 +36,7 @@ const Registro: React.FC = () => {
         <p style={{ color: '#cccccc', fontSize: '1.2rem' }}>Completá el formulario para reservar tu stand en la Expo Textil Gráfica 2026</p>
       </div>
 
-      <div style={{
+      <div className="resp-padding" style={{
         backgroundColor: '#ffffff', padding: '4rem', borderRadius: '24px',
         boxShadow: '0 15px 40px rgba(0,0,0,0.4)', width: '100%',
         maxWidth: '900px', borderTop: '6px solid #ff0000'

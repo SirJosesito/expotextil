@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
-    <header style={{
+    <header className="resp-header" style={{
       position: 'sticky',
       top: 0,
       backgroundColor: '#0a0a0a',
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
       </div>
 
       {/* Navegación */}
-      <nav style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+      <nav className="resp-nav" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
         <NavLink 
           to="/" 
           style={({ isActive }) => ({

@@ -12,7 +12,7 @@ const PagosMockup: React.FC = () => {
     }}>
       
       {/* COLUMNA IZQUIERDA: Formulario (65%) */}
-      <section style={{ 
+      <section className="resp-full-width resp-padding" style={{ 
         flex: '1 1 60%', 
         padding: '3rem 10%', // Padding lateral dinámico
         boxSizing: 'border-box'
@@ -105,7 +105,7 @@ const PagosMockup: React.FC = () => {
       </section>
 
       {/* COLUMNA DERECHA: Resumen de Pedido (35%) */}
-      <aside style={{ 
+      <aside className="resp-full-width resp-padding" style={{ 
         flex: '1 1 35%', 
         padding: '3rem 5%', 
         backgroundColor: '#f0f4f8', // Azul-grisáceo pastel muy sutil y serio

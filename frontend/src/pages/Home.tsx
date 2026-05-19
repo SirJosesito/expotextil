@@ -27,7 +27,7 @@ const Home: React.FC = () => {
     <main style={{ padding: '0', textAlign: 'center', backgroundColor: '#fafafa' }}>
       
       {/* Sección Hero */}
-      <section style={{ 
+      <section className="resp-hero" style={{ 
         position: 'relative',
         backgroundColor: '#111',
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url("https://i.ytimg.com/vi/6ZXYAP5YnQw/maxresdefault.jpg")',
@@ -44,16 +44,16 @@ const Home: React.FC = () => {
       }}>
         
         {/* Lado Izquierdo: Textos */}
-        <div style={{ flex: '1 1 55%', textAlign: 'left', minWidth: '300px' }}>
+        <div className="resp-full-width resp-center-text" style={{ flex: '1 1 55%', textAlign: 'left', minWidth: '300px' }}>
           {/* Logo superior */}
           <div style={{ marginBottom: '1.5rem', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '2px' }}>
             <span style={{ color: '#ff0000' }}>EXPO</span> TEXTIL <br/> CONCORDIA
           </div>
 
-          <h1 style={{ fontSize: '4.5rem', color: '#ffffff', margin: '0 0 1rem 0', fontWeight: '900', textTransform: 'uppercase', lineHeight: '1.1' }}>
+          <h1 className="resp-hero-title" style={{ fontSize: '4.5rem', color: '#ffffff', margin: '0 0 1rem 0', fontWeight: '900', textTransform: 'uppercase', lineHeight: '1.1' }}>
             EXPO TEXTIL<br/>GRÁFICA 2026
           </h1>
-          <p style={{ fontSize: '1.3rem', color: '#cccccc', fontWeight: '400', marginBottom: '2.5rem', maxWidth: '600px' }}>
+          <p className="resp-hero-subtitle" style={{ fontSize: '1.3rem', color: '#cccccc', fontWeight: '400', marginBottom: '2.5rem', maxWidth: '600px' }}>
             26 y 27 de Septiembre · Centro de Convenciones Concordia
           </p>
           
@@ -87,8 +87,8 @@ const Home: React.FC = () => {
         </div>
 
         {/* Lado Derecho: Diapositiva de Fotos */}
-        <div style={{ flex: '1 1 35%', minWidth: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{
+        <div className="resp-full-width" style={{ flex: '1 1 35%', minWidth: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="resp-carousel" style={{
             width: '100%',
             height: '400px',
             borderRadius: '24px',
@@ -120,7 +120,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Espacios para rellenar información (Tarjetas) */}
-      <section style={{ 
+      <section className="resp-cards" style={{ 
         display: 'flex', 
         gap: '2rem', 
         justifyContent: 'center', 
@@ -129,15 +129,15 @@ const Home: React.FC = () => {
         backgroundColor: '#fafafa',
         borderBottom: '1px solid #eaeaea'
       }}>
-        <div style={{ maxWidth: '1200px', display: 'flex', gap: '2rem', flexWrap: 'wrap', width: '100%' }}>
-          <div style={{ backgroundColor: '#ffffff', padding: '2.5rem', borderRadius: '16px', flex: '1', minWidth: '300px', textAlign: 'left', borderTop: '4px solid #ff0000', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+        <div className="resp-flex-col" style={{ maxWidth: '1200px', display: 'flex', gap: '2rem', flexWrap: 'wrap', width: '100%' }}>
+          <div className="resp-full-width" style={{ backgroundColor: '#ffffff', padding: '2.5rem', borderRadius: '16px', flex: '1', minWidth: '300px', textAlign: 'left', borderTop: '4px solid #ff0000', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
             <h2 style={{ color: '#333333', marginTop: 0, fontSize: '1.5rem' }}>¿Qué es la Expo?</h2>
             <p style={{ color: '#666666', lineHeight: '1.6' }}>
               Lorem ipsum dolor sit amet consectetur adipiscing elit commodo nam, gravida class dictum penatibus arcu conubia libero bibendum at sociosqu, euismod aptent nisl posuere in dapibus suscipit ultricies. Eget molestie iaculis vehicula facilisis placerat cursus, nam vel orci varius a faucibus in, diam elementum malesuada nisi semper. Ut laoreet facilisi malesuada interdum porttitor ultrices nunc conubia egestas, maecenas congue mollis id feugiat auctor mattis lacus quis, sociis libero faucibus ante cursus netus natoque aliquet.
             </p>
           </div>
 
-          <div style={{ backgroundColor: '#ffffff', padding: '2.5rem', borderRadius: '16px', flex: '1', minWidth: '300px', textAlign: 'left', borderTop: '4px solid #ff0000', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+          <div className="resp-full-width" style={{ backgroundColor: '#ffffff', padding: '2.5rem', borderRadius: '16px', flex: '1', minWidth: '300px', textAlign: 'left', borderTop: '4px solid #ff0000', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
             <h2 style={{ color: '#333333', marginTop: 0, fontSize: '1.5rem' }}>¿Por qué participar?</h2>
             <p style={{ color: '#666666', lineHeight: '1.6' }}>
               Lorem ipsum dolor sit amet consectetur adipiscing elit commodo nam, gravida class dictum penatibus arcu conubia libero bibendum at sociosqu, euismod aptent nisl posuere in dapibus suscipit ultricies. Eget molestie iaculis vehicula facilisis placerat cursus, nam vel orci varius a faucibus in, diam elementum malesuada nisi semper. Ut laoreet facilisi malesuada interdum porttitor ultrices nunc conubia egestas, maecenas congue mollis id feugiat auctor mattis lacus quis, sociis libero faucibus ante cursus netus natoque aliquet.
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Sección Mapa */}
-      <section style={{
+      <section className="resp-padding" style={{
         backgroundColor: '#ffffff',
         padding: '5rem 2rem'
       }}>
