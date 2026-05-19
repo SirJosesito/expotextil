@@ -1,11 +1,17 @@
 import React from 'react';
-import imgTextil1 from '../assets/textil.png';
-import imgTextil2 from '../assets/textil2.png';
-import imgTextil3 from '../assets/textil3.png';
-import imgTextil4 from '../assets/textil4.png';
+import imgTextil1 from '../assets/textil.jpg';
+import imgTextil2 from '../assets/textil2.jpg';
+import imgTextil3 from '../assets/textil3.jpg';
+import imgTextil4 from '../assets/textil4.jpg';
+import imgTextil5 from '../assets/textil1.jpg';
+import imgGallery1 from '../assets/textil1-1.jpg';
+import imgGallery2 from '../assets/textil1-2.jpg';
+import imgGallery3 from '../assets/textil1-3.jpg';
+import imgGallery4 from '../assets/textil1-4.jpg';
 
 const Home: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const [galleryIndex, setGalleryIndex] = React.useState(0);
 
   // Imágenes de muestra relacionadas con textiles/expo
   const heroImages = [
@@ -13,8 +19,24 @@ const Home: React.FC = () => {
     imgTextil1,
     imgTextil2,
     imgTextil3,
-    imgTextil4
+    imgTextil4,
+    imgTextil5,
   ];
+
+  const galleryImages = [
+    imgGallery1,
+    imgGallery2,
+    imgGallery3,
+    imgGallery4,
+  ];
+
+  const handleNextGallery = () => {
+    setGalleryIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const handlePrevGallery = () => {
+    setGalleryIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +44,13 @@ const Home: React.FC = () => {
     }, 4000); // Cambia de foto cada 4 segundos
     return () => clearInterval(interval);
   }, [heroImages.length]);
+
+  React.useEffect(() => {
+    const galleryInterval = setInterval(() => {
+      setGalleryIndex((prev) => (prev + 1) % galleryImages.length);
+    }, 3000); // Cambia de foto cada 3 segundos en el carrusel
+    return () => clearInterval(galleryInterval);
+  }, [galleryImages.length]);
 
   return (
     <main style={{ padding: '0', textAlign: 'center', backgroundColor: '#fafafa' }}>
@@ -162,9 +191,86 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
           <div style={{ backgroundColor: '#ffffff', padding: '2.5rem', borderRadius: '16px', flex: '1', minWidth: '300px', textAlign: 'left', borderTop: '4px solid #ff0000', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
             <h2 style={{ color: '#333333', marginTop: 0, fontSize: '1.5rem' }}>Rubros que participan</h2>
             <p style={{ color: '#666666', lineHeight: '1.6' }}>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit commodo nam.
+              Los rubros que participan en la Expo Textil, Gráfica y Creativa Concordia 2026 incluyen:
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Galería / Carrusel de Fotos */}
+      <section className="resp-padding" style={{
+        backgroundColor: '#f5f5f5',
+        padding: '5rem 2rem',
+        overflow: 'hidden',
+        textAlign: 'center',
+        borderBottom: '1px solid #eaeaea'
+      }}>
+        <h2 style={{ fontSize: '2.5rem', color: '#000000ff', margin: '0 0 0.5rem 0', fontWeight: 'bold' , textDecoration: 'underline red 2px' , textUnderlineOffset: '10px'}}>
+          Galería de la Expo
+        </h2>
+        <p style={{ fontSize: '1.1rem', color: '#666666', marginBottom: '3rem' }}>
+          Conocé un poco más sobre lo que vas a vivir
+        </p>
+        
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '1000px',
+          height: '400px', // Tamaño fijo
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {galleryImages.map((src, index) => {
+            let position = 'hidden';
+            if (index === galleryIndex) {
+              position = 'center';
+            } else if (index === (galleryIndex - 1 + galleryImages.length) % galleryImages.length) {
+              position = 'left';
+            } else if (index === (galleryIndex + 1) % galleryImages.length) {
+              position = 'right';
+            }
+
+            let styles: React.CSSProperties = {
+              position: 'absolute',
+              width: '60%',
+              maxWidth: '600px',
+              height: '90%',
+              borderRadius: '16px',
+              backgroundImage: `url(${src})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              transition: 'all 0.5s ease-in-out',
+              boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
+              opacity: 0,
+              zIndex: 0,
+              pointerEvents: 'none'
+            };
+
+            if (position === 'center') {
+              styles = { ...styles, transform: 'translateX(0) scale(1)', opacity: 1, zIndex: 3, pointerEvents: 'auto' };
+            } else if (position === 'left') {
+              styles = { ...styles, transform: 'translateX(-50%) scale(0.85)', opacity: 0.6, zIndex: 2, cursor: 'pointer', pointerEvents: 'auto' };
+            } else if (position === 'right') {
+              styles = { ...styles, transform: 'translateX(50%) scale(0.85)', opacity: 0.6, zIndex: 2, cursor: 'pointer', pointerEvents: 'auto' };
+            }
+
+            return (
+              <div 
+                key={index} 
+                style={styles} 
+                onClick={() => {
+                  if (position === 'left') handlePrevGallery();
+                  if (position === 'right') handleNextGallery();
+                }}
+              />
+            );
+          })}
+
+          {/* Botones de navegación */}
+          <button onClick={handlePrevGallery} style={{ position: 'absolute', left: '2%', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', zIndex: 10, fontSize: '1.5rem', color: '#333' }}>&#10094;</button>
+          <button onClick={handleNextGallery} style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', zIndex: 10, fontSize: '1.5rem', color: '#333' }}>&#10095;</button>
         </div>
       </section>
 
