@@ -27,7 +27,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     // 4. Generar el JWT
     const token = jwt.sign(
-      { id: result.insertId, email, rol: 'visitante' }, 
+      { id: result.insertId, email, rol: 'registrado' }, 
       process.env.JWT_SECRET || 'fallback_secret', 
       { expiresIn: '24h' }
     );

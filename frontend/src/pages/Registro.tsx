@@ -129,7 +129,7 @@ const Registro: React.FC = () => {
 
             {/* Comentarios */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', textAlign: 'left' }}>
-              <label htmlFor="comentarios" style={{ fontWeight: '600', color: '#555', fontSize: '1rem' }}>¿Tienes algún requerimiento especial para tu stand?</label>
+              <label htmlFor="comentarios" style={{ fontWeight: '600', color: '#555', fontSize: '1rem' }}>¿Tenés algún requerimiento especial para tu stand?</label>
               <textarea
                 id="comentarios"
                 name="comentarios"

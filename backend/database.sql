@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(255) NOT NULL UNIQUE,
     telefono VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    rol ENUM('visitante', 'expositor', 'admin') DEFAULT 'visitante',
+    rol ENUM('registrado', 'expositor', 'prensa', 'admin') DEFAULT 'registrado',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
