@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         &copy; {new Date().getFullYear()} Expo Textil, Gráfica y Creativa Concordia. Todos los derechos reservados.
       </div>
       <div>
-        Diseñado y desarrollado por <a href="https://github.com/SirJosesito" target="_blank" rel="noreferrer" style={{ color: '#ffffff', fontWeight: 'bold', textDecoration: 'none' }}>José Romanoli</a>
+        Diseñado y desarrollado por <a href="https://github.com/jRoma-dev" target="_blank" rel="noreferrer" style={{ color: '#ffffff', fontWeight: 'bold', textDecoration: 'none' }}>José Romanoli</a>
       </div>
     </footer>
   );
