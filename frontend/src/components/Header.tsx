@@ -72,6 +72,22 @@ const Header: React.FC = () => {
           PAGOS
         </NavLink>
 
+        <NavLink 
+          to="/login" 
+          style={({ isActive }) => ({
+            textDecoration: 'none',
+            color: isActive ? '#ff0000' : '#ffffff',
+            fontWeight: isActive ? '700' : '600',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            backgroundColor: isActive ? 'rgba(255,0,0,0.1)' : 'transparent',
+            transition: 'all 0.3s ease',
+            border: '1px solid rgba(255,255,255,0.2)'
+          })}
+        >
+          INICIAR SESIÓN
+        </NavLink>
+
         {/* Botón CTA Destacado */}
         <NavLink 
           to="/registro" 

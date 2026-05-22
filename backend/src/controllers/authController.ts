@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db';
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
+import { Resend } from 'resend';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -31,6 +32,32 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       process.env.JWT_SECRET || 'fallback_secret', 
       { expiresIn: '24h' }
     );
+
+    // 5. Enviar correo de notificación usando Resend
+    if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const adminEmail = process.env.ADMIN_EMAIL || 'tucorreo@ejemplo.com';
+
+      // No usamos await aquí para que la respuesta al Frontend sea inmediata, el correo se enviará en segundo plano
+      resend.emails.send({
+        from: 'Notificaciones Expo Textil <onboarding@resend.dev>',
+        to: adminEmail,
+        subject: '¡Nuevo Registro en Expo Textil!',
+        html: `
+          <div style="font-family: Arial, sans-serif; color: #333;">
+            <h2 style="color: #e60000;">Se ha registrado una nueva empresa/marca</h2>
+            <p>Estos son los detalles del contacto:</p>
+            <ul>
+              <li><strong>Empresa:</strong> ${empresa}</li>
+              <li><strong>Responsable:</strong> ${nombre}</li>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Teléfono/WhatsApp:</strong> ${telefono}</li>
+            </ul>
+            <p><em>Este usuario acaba de crear su cuenta y tiene el rol "registrado".</em></p>
+          </div>
+        `
+      }).catch(err => console.error('Error enviando email con Resend:', err));
+    }
 
     res.status(201).json({ message: 'Usuario registrado exitosamente.', token });
   } catch (error) {

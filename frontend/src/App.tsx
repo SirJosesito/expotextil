@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Registro from './pages/Registro';
+import Login from './pages/Login';
 import PagosMockup from './pages/PagosMockup';
 
 const App: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/registro" element={<Registro />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/pagos" element={
               <div style={{ backgroundColor: '#fafafa', color: '#000', minHeight: 'calc(100vh - 80px)' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', boxShadow: '0 0 15px rgba(0,0,0,0.05)' }}>
