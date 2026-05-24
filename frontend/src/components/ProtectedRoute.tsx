@@ -13,7 +13,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  // Si hay token, lo dejamos ver el componente hijo (ej: PagosMockup)
+  // Si hay token, lo dejamos ver el componente hijo (ej: Checkout)
   return children;
 };
 

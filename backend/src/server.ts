@@ -3,6 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import paymentRoutes from './routes/paymentRoutes';
@@ -11,9 +13,20 @@ import pool from './config/db';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// Middlewares de Seguridad Básicos
+app.use(helmet()); // Configura encabezados HTTP seguros para prevenir ataques XSS, Clickjacking, etc.
 app.use(cors());
 app.use(express.json()); // Para parsear el body a JSON
+
+// Rate Limiter: Previene ataques DDoS o de Fuerza Bruta limitando peticiones
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 150, // Limite de 150 peticiones por IP cada 15 min
+  message: 'Demasiadas peticiones desde esta IP, por favor intenta de nuevo más tarde.',
+  standardHeaders: true, // Retorna info del limite en los headers RateLimit-*
+  legacyHeaders: false, // Deshabilita los headers X-RateLimit-*
+});
+app.use('/api/', apiLimiter); // Se aplica a todas las rutas de la API
 
 // Rutas base
 app.use('/api/auth', authRoutes);

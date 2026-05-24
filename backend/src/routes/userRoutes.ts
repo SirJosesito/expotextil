@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getProfile, getAllUsers } from '../controllers/userController';
+import { getProfile, getAllUsers, getUserPurchases } from '../controllers/userController';
 import { verifyToken, requireRole } from '../middlewares/authMiddleware';
 
 const router = Router();
@@ -16,5 +16,10 @@ router.get('/profile', verifyToken, getProfile);
 // 1. Debe tener sesión iniciada (verifyToken)
 // 2. Debe tener específicamente el rol de "admin" (requireRole)
 router.get('/all', verifyToken, requireRole(['admin']), getAllUsers);
+
+// RUTA 3: Panel del Expositor (Mis Compras)
+// GET /api/users/purchases
+// Solo usuarios logueados pueden ver sus propias compras.
+router.get('/purchases', verifyToken, getUserPurchases);
 
 export default router;

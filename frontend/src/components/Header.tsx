@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import logoImg from '../assets/logo.png';
+import { NavLink, Link } from 'react-router-dom';
+import logoImg from '../assets/logo.webp';
 
 const Header: React.FC = () => {
   const isLoggedIn = !!localStorage.getItem('token');
@@ -65,20 +65,36 @@ const Header: React.FC = () => {
         </NavLink>
         
         {isLoggedIn && (
-          <NavLink 
-            to="/pagos" 
-            style={({ isActive }) => ({
-              textDecoration: 'none',
-              color: isActive ? '#ff0000' : '#cccccc',
-              fontWeight: isActive ? '700' : '500',
-              padding: '0.5rem 1rem',
-              borderRadius: '20px',
-              backgroundColor: isActive ? 'rgba(255,0,0,0.1)' : 'transparent',
-              transition: 'all 0.3s ease'
-            })}
-          >
-            PAGOS
-          </NavLink>
+          <>
+            <NavLink 
+              to="/dashboard" 
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#ff0000' : '#ffffff',
+                fontWeight: isActive ? '700' : '600',
+                padding: '0.5rem 1rem',
+                borderRadius: '20px',
+                backgroundColor: isActive ? 'rgba(255,0,0,0.1)' : 'transparent',
+                transition: 'all 0.3s ease'
+              })}
+            >
+              MI PANEL
+            </NavLink>
+            <NavLink 
+              to="/checkout" 
+              style={({ isActive }) => ({
+                textDecoration: 'none',
+                color: isActive ? '#ff0000' : '#cccccc',
+                fontWeight: isActive ? '700' : '500',
+                padding: '0.5rem 1rem',
+                borderRadius: '20px',
+                backgroundColor: isActive ? 'rgba(255,0,0,0.1)' : 'transparent',
+                transition: 'all 0.3s ease'
+              })}
+            >
+              COMPRAR STAND
+            </NavLink>
+          </>
         )}
 
         {!isLoggedIn ? (
@@ -99,29 +115,31 @@ const Header: React.FC = () => {
               INICIAR SESIÓN
             </NavLink>
 
-            <NavLink 
-              to="/registro" 
+            <Link 
+              to="/register" 
               style={{
                 textDecoration: 'none',
                 color: '#ffffff',
-                fontWeight: 'bold',
-                padding: '0.6rem 1.8rem 0.8rem',
-                borderRadius: '25px',
-                backgroundColor: '#ff0000',
-                boxShadow: '0 4px 15px rgba(255, 0, 0, 0.4)',
+                fontWeight: '700',
+                backgroundColor: '#e60000',
+                padding: '0.6rem 1.5rem',
+                borderRadius: '30px',
                 transition: 'all 0.3s ease',
+                border: '2px solid transparent'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.backgroundColor = '#cc0000';
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.border = '2px solid #e60000';
+                e.currentTarget.style.color = '#e60000';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.backgroundColor = '#ff0000';
+                e.currentTarget.style.backgroundColor = '#e60000';
+                e.currentTarget.style.border = '2px solid transparent';
+                e.currentTarget.style.color = '#ffffff';
               }}
             >
               REGISTRO
-            </NavLink>
+            </Link>
           </>
         ) : (
           <button 

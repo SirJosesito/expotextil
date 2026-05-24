@@ -30,7 +30,7 @@ POST {{baseUrl}}/payments/simulate-webhook
 Content-Type: application/json
 
 {
-    "compraId": 20,
+    "compraId": 27,
     "estado": "approved"
 }
 

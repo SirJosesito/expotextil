@@ -39,3 +39,32 @@ export const getAllUsers = async (req: AuthRequest, res: Response): Promise<void
     res.status(500).json({ message: 'Error interno del servidor.' });
   }
 };
+
+// Controlador para obtener el historial de compras y stands del usuario
+export const getUserPurchases = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user.id;
+
+    // Hacemos un JOIN entre compras_stands y stands para devolver la información útil
+    const [rows] = await pool.query<RowDataPacket[]>(`
+      SELECT 
+        c.id as compra_id,
+        c.estado as estado_pago,
+        c.pago_id,
+        c.detalles_adicionales,
+        c.created_at,
+        s.nombre as stand_nombre,
+        s.precio as stand_precio,
+        s.dimensiones as metros_cuadrados
+      FROM compras_stands c
+      INNER JOIN stands s ON c.stand_id = s.id
+      WHERE c.usuario_id = ?
+      ORDER BY c.created_at DESC
+    `, [userId]);
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener compras del usuario:', error);
+    res.status(500).json({ message: 'Error interno del servidor al consultar compras.' });
+  }
+};

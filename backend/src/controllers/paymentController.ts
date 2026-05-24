@@ -77,11 +77,12 @@ export const createPreference = async (req: AuthRequest, res: Response): Promise
           email: userEmail
         },
         back_urls: {
-          success: `${frontendUrl}/pagos/exito`,
-          failure: `${frontendUrl}/pagos/fallo`,
-          pending: `${frontendUrl}/pagos/pendiente`
+          success: `${frontendUrl}/checkout/exito`,
+          failure: `${frontendUrl}/checkout/fallo`,
+          pending: `${frontendUrl}/checkout/pendiente`
         },
         auto_return: 'approved',
+        notification_url: process.env.BACKEND_URL ? `${process.env.BACKEND_URL}/api/payments/webhook` : undefined,
         external_reference: compraId.toString(),
         expires: true,
         expiration_date_to: new Date(Date.now() + 15 * 60000).toISOString() // El link expira en 15 minutos

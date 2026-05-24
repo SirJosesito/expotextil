@@ -109,7 +109,7 @@ const Login: React.FC = () => {
           
           {/* Redirección a Registro */}
           <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '1.05rem', color: '#555' }}>
-            ¿No tenés una cuenta? <Link to="/registro" style={{ color: '#e60000', fontWeight: 'bold', textDecoration: 'none' }}>Registrate aquí</Link>
+            ¿No tenés una cuenta? <Link to="/register" style={{ color: '#e60000', fontWeight: 'bold', textDecoration: 'none' }}>Registrate aquí</Link>
           </div>
         </form>
       </div>

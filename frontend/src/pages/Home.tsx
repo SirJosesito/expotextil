@@ -1,22 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import imgTextil1 from '../assets/textil.jpg';
-import imgTextil2 from '../assets/textil2.jpg';
-import imgTextil3 from '../assets/textil3.jpg';
-import imgTextil4 from '../assets/textil4.jpg';
-import imgTextil5 from '../assets/textil1.jpg';
-import imgGallery1 from '../assets/textil1-1.jpg';
-import imgGallery2 from '../assets/textil1-2.jpg';
-import imgGallery3 from '../assets/textil1-3.jpg';
-import imgGallery4 from '../assets/textil1-4.jpg';
+import imgTextil1 from '../assets/textil.webp';
+import imgTextil2 from '../assets/textil2.webp';
+import imgTextil3 from '../assets/textil3.webp';
+import imgTextil4 from '../assets/textil4.webp';
+import imgTextil5 from '../assets/textil1.webp';
+import imgGallery1 from '../assets/textil1-1.webp';
+import imgGallery2 from '../assets/textil1-2.webp';
+import imgGallery3 from '../assets/textil1-3.webp';
+import imgGallery4 from '../assets/textil1-4.webp';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('token');
+  // ESTADOS
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [galleryIndex, setGalleryIndex] = React.useState(0);
+  const videoSectionRef = React.useRef<HTMLDivElement>(null);
 
-  // Imágenes de muestra relacionadas con textiles/expo
+  const scrollToVideo = () => {
+    videoSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // IMAGENES
   const heroImages = [
     "https://images.pexels.com/photos/6717035/pexels-photo-6717035.jpeg?_gl=1*8bv341*_ga*ODA2NTkzNDIzLjE3NzkxMjA5Mjc.*_ga_8JE65Q40S6*czE3NzkxMjA5MjckbzEkZzEkdDE3NzkxMjY2MTMkajU5JGwwJGgw",
     imgTextil1,
@@ -58,7 +64,7 @@ const Home: React.FC = () => {
   return (
     <main style={{ padding: '0', textAlign: 'center', backgroundColor: '#fafafa' }}>
       
-      {/* Sección Hero */}
+      {/* SECCION HERO */}
       <section className="resp-hero" style={{ 
         position: 'relative',
         backgroundColor: '#111',
@@ -75,9 +81,7 @@ const Home: React.FC = () => {
         gap: '3rem'
       }}>
         
-        {/* Lado Izquierdo: Textos */}
         <div className="resp-full-width resp-center-text" style={{ flex: '1 1 55%', textAlign: 'left', minWidth: '300px' }}>
-          {/* Logo superior */}
           <div style={{ marginBottom: '1.5rem', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '2px' }}>
             <span style={{ color: '#ff0000' }}>EXPO</span> TEXTIL <br/> CONCORDIA
           </div>
@@ -91,7 +95,7 @@ const Home: React.FC = () => {
           
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <button 
-              onClick={() => navigate(isLoggedIn ? '/pagos' : '/registro')}
+              onClick={() => navigate(isLoggedIn ? '/checkout' : '/register')}
               style={{
                 backgroundColor: '#ff0000',
                 color: '#ffffff',
@@ -150,7 +154,6 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Lado Derecho: Diapositiva de Fotos */}
         <div className="resp-full-width" style={{ flex: '1 1 35%', minWidth: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className="resp-carousel" style={{
             width: '100%',
@@ -174,16 +177,60 @@ const Home: React.FC = () => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   opacity: currentImageIndex === index ? 1 : 0,
-                  // transform: currentImageIndex === index ? 'scale(1.05)' : 'scale(1)', // Ligero efecto de zoom dinámico
                   transition: 'opacity 1s ease-in-out, transform 4s linear'
                 }}
               />
             ))}
           </div>
         </div>
+
+        <div 
+          onClick={scrollToVideo}
+          style={{
+            position: 'absolute',
+            bottom: '2rem',
+            right: '2rem',
+            width: '120px',
+            height: '213px', // Proporción 9:16
+            borderRadius: '12px',
+            overflow: 'hidden',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.8)',
+            border: '2px solid #ff0000',
+            cursor: 'pointer',
+            zIndex: 10,
+            backgroundColor: '#000',
+            transition: 'transform 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <video 
+            src="/promo.mp4" 
+            autoPlay 
+            loop 
+            muted={true} // El video se reproducirá sin sonido para evitar bloqueos por parte del navegador, pero el usuario puede hacer clic para activar el sonido si lo desea
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            backgroundColor: 'rgba(230,0,0,0.9)',
+            color: 'white',
+            textAlign: 'center',
+            padding: '8px 0',
+            fontSize: '0.85rem',
+            fontWeight: 'bold',
+            letterSpacing: '1px'
+          }}>
+            VER VIDEO
+          </div>
+        </div>
       </section>
 
-      {/* Espacios para rellenar información (Tarjetas) */}
+      {/* SECCION INFO */}
       <section className="resp-cards" style={{ 
         display: 'flex', 
         gap: '2rem', 
@@ -232,7 +279,7 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
         </div>
       </section>
 
-      {/* Banner de Conversión / Call to Action */}
+      {/* SECCION CALL TO ACTION */}
       <section style={{ 
         backgroundColor: '#e60000', 
         padding: '5rem 2rem', 
@@ -263,7 +310,7 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
           </div>
 
           <button 
-            onClick={() => navigate(isLoggedIn ? '/pagos' : '/registro')}
+            onClick={() => navigate(isLoggedIn ? '/checkout' : '/register')}
             style={{
               backgroundColor: '#ffffff',
               color: '#e60000',
@@ -291,7 +338,47 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
         </div>
       </section>
 
-      {/* Galería / Carrusel de Fotos */}
+      {/* SECCION VIDEO PRINCIPAL */}
+      <section 
+        ref={videoSectionRef}
+        style={{
+          backgroundColor: '#0a0a0a',
+          padding: '5rem 2rem',
+          textAlign: 'center',
+          color: 'white',
+          borderBottom: '1px solid #222'
+        }}
+      >
+        <h2 style={{ fontSize: '2.5rem', color: '#ffffff', margin: '0 0 1rem 0', fontWeight: 'bold' }}>
+          ¡Escuchá a nuestros Protagonistas!
+        </h2>
+        <p style={{ fontSize: '1.1rem', color: '#aaaaaa', marginBottom: '3rem' }}>
+          Enterate por qué la Expo Textil 2026 es el lugar donde tenés que estar.
+        </p>
+        
+        <div style={{
+          width: '100%',
+          maxWidth: '400px',
+          margin: '0 auto',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+          border: '2px solid rgba(255,0,0,0.3)',
+          aspectRatio: '9/16'
+        }}>
+          <video 
+            src="/promo.mp4" 
+            controls 
+            autoPlay 
+            loop 
+            muted
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+      </section>
+
+      {/* SECCION GALERIA */}
       <section className="resp-padding" style={{
         backgroundColor: '#f5f5f5',
         padding: '5rem 2rem',
@@ -362,13 +449,12 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
             );
           })}
 
-          {/* Botones de navegación */}
           <button onClick={handlePrevGallery} style={{ position: 'absolute', left: '2%', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', zIndex: 10, fontSize: '1.5rem', color: '#333' }}>&#10094;</button>
           <button onClick={handleNextGallery} style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', zIndex: 10, fontSize: '1.5rem', color: '#333' }}>&#10095;</button>
         </div>
       </section>
 
-      {/* Sección Mapa */}
+      {/* SECCION MAPA */}
       <section className="resp-padding" style={{
         backgroundColor: '#ffffff',
         padding: '5rem 2rem'
@@ -386,7 +472,6 @@ La expo es una oportunidad ideal para emprendedores, marcas, talleres, diseñado
           boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
           border: '1px solid #cccccc'
         }}>
-          {/* Reemplazar src con el mapa real cuando se necesite */}
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3406.0770411171916!2d-58.02063992374097!3d-31.384439174276473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95ade819f980ab2f%3A0x1c286421f93aa1c7!2sCentro%20de%20Convenciones%20Concordia!5e0!3m2!1ses!2sar!4v1779113907564!5m2!1ses!2sar" 
             width="100%" 
