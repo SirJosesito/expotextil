@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS compras_stands (
     stand_id VARCHAR(50) NOT NULL,
     pago_id VARCHAR(100), -- ID que nos devolverá MercadoPago
     estado ENUM('pendiente', 'aprobado', 'rechazado', 'expirado') DEFAULT 'pendiente',
+    tipo_pago ENUM('completo', 'seña') DEFAULT 'completo',
+    saldo_pagado TINYINT(1) DEFAULT 0,
+    monto_pagado DECIMAL(10, 2) DEFAULT 0.00,
     detalles_adicionales TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

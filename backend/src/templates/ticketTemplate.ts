@@ -16,7 +16,7 @@ export const ticketTemplate = `
     
     <!-- Cuerpo del Mensaje -->
     <div style="padding: 40px 30px; background-color: #fcfcfc;">
-      <p style="font-size: 16px; color: #333; margin-top: 0;">Tu pago ha sido procesado y aprobado con éxito. A continuación, te presentamos los detalles oficiales de tu stand para la Expo Textil Gráfica y Creativa 2026:</p>
+      <p style="font-size: 16px; color: #333; margin-top: 0; line-height: 1.6;">{{{mensaje_especial}}}</p>
       
       <!-- Contenedor del Ticket -->
       <div style="background-color: #ffffff; border: 2px dashed #cccccc; padding: 25px; text-align: center; margin: 30px 0; border-radius: 8px;">

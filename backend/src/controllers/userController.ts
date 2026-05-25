@@ -53,6 +53,9 @@ export const getUserPurchases = async (req: AuthRequest, res: Response): Promise
         c.pago_id,
         c.detalles_adicionales,
         c.created_at,
+        c.tipo_pago,
+        c.saldo_pagado,
+        c.monto_pagado,
         s.nombre as stand_nombre,
         s.precio as stand_precio,
         s.dimensiones as metros_cuadrados

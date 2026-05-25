@@ -25,12 +25,25 @@ GET {{baseUrl}}/payments/stands
 ### luego abrir phpMyAdmin, buscar en la tabla "compras_stands" el "id" de tu compra pendiente,
 ### y reemplazar el número "1" aquí abajo por tu ID real.
 
-### 3. SIMULAR PAGO APROBADO (Sube al usuario a Expositor)
+### 3. SIMULAR PAGO INICIAL APROBADO (Sube al usuario a Expositor / Registra Seña o Pago Completo)
+# IMPORTANTE: Si elegiste "Seña (50%)", esto aprobará la Seña y te dejará un saldo pendiente en tu Panel.
 POST {{baseUrl}}/payments/simulate-webhook
 Content-Type: application/json
 
 {
-    "compraId": 27,
+    "compraId": 137,
+    "estado": "approved"
+}
+
+### 3.5 SIMULAR PAGO DE SALDO RESTANTE APROBADO (Stand al 100% Completado)
+# NOTA: Puedes usar tanto "saldo-136" como simplemente "136" en tu simulación local.
+# Nuestra base de datos ahora es inteligente y detectará automáticamente que estás completando el saldo 
+# si la seña inicial de esta reserva ya estaba aprobada.
+POST {{baseUrl}}/payments/simulate-webhook
+Content-Type: application/json
+
+{
+    "compraId": "saldo-137",
     "estado": "approved"
 }
 

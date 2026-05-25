@@ -15,6 +15,7 @@ const Checkout: React.FC = () => {
   const [detalles, setDetalles] = useState('');
   const [stands, setStands] = useState<Stand[]>([]);
   const [loadingStands, setLoadingStands] = useState(true);
+  const [modalidadPago, setModalidadPago] = useState<'completo' | 'seña'>('completo');
 
   // Cargar inventario real desde el Backend al abrir la página
   useEffect(() => {
@@ -36,6 +37,11 @@ const Checkout: React.FC = () => {
 
   const selectedStand = stands.find(s => s.id === selectedStandId);
 
+  const handleStandSelect = (id: string) => {
+    setSelectedStandId(id);
+    setModalidadPago('completo'); // Reset a completo por defecto al cambiar de stand
+  };
+
   const handleCheckout = async () => {
     if (!selectedStand) {
       alert("Por favor selecciona un stand primero.");
@@ -46,7 +52,6 @@ const Checkout: React.FC = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         alert("Debes iniciar sesión para poder adquirir un stand.");
-        // Aquí podríamos redirigir al /login
         return;
       }
 
@@ -58,7 +63,8 @@ const Checkout: React.FC = () => {
         },
         body: JSON.stringify({
           standId: selectedStand.id,
-          detalles: detalles
+          detalles: detalles,
+          tipoPago: modalidadPago
         })
       });
 
@@ -110,7 +116,7 @@ const Checkout: React.FC = () => {
               return (
                 <div 
                   key={stand.id}
-                  onClick={() => !isAgotado && setSelectedStandId(stand.id)}
+                  onClick={() => !isAgotado && handleStandSelect(stand.id)}
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -234,11 +240,60 @@ const Checkout: React.FC = () => {
               </div>
             </div>
 
+            {/* Modalidad de Pago Selector */}
+            <div style={{ 
+              marginBottom: '2rem', 
+              padding: '1.2rem', 
+              backgroundColor: '#ffffff', 
+              borderRadius: '12px', 
+              border: '1px solid #e1e4e8',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.01)'
+            }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#333', marginBottom: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Modalidad de Pago:</label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', cursor: 'pointer', fontSize: '0.9rem', color: '#111' }}>
+                  <input 
+                    type="radio" 
+                    name="modalidadPago" 
+                    value="completo" 
+                    checked={modalidadPago === 'completo'}
+                    onChange={() => setModalidadPago('completo')}
+                    style={{ accentColor: '#e60000', marginTop: '3px' }}
+                  />
+                  <div>
+                    <strong>Pago Completo (100%)</strong>
+                    <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '2px' }}>Abonas la totalidad ahora. Stand 100% saldado.</div>
+                  </div>
+                </label>
+                
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', cursor: 'pointer', fontSize: '0.9rem', color: '#111' }}>
+                  <input 
+                    type="radio" 
+                    name="modalidadPago" 
+                    value="seña" 
+                    checked={modalidadPago === 'seña'}
+                    onChange={() => setModalidadPago('seña')}
+                    style={{ accentColor: '#e60000', marginTop: '3px' }}
+                  />
+                  <div>
+                    <strong>Abonar Seña (50%)</strong>
+                    <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '2px' }}>Reserva tu stand hoy. Cancela la otra mitad antes del 24/09 inclusive.</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', paddingBottom: '2rem', borderBottom: '1px solid #d1d5db', marginBottom: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', fontSize: '0.95rem' }}>
-                <span>Subtotal</span>
+                <span>Subtotal ({selectedStand.nombre})</span>
                 <span style={{ fontWeight: '500' }}>${Number(selectedStand.precio).toLocaleString('es-AR')}</span>
               </div>
+              {modalidadPago === 'seña' && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#e60000', fontSize: '0.95rem', fontWeight: '500' }}>
+                  <span>Pago Diferido (50% Saldo)</span>
+                  <span>-${(Number(selectedStand.precio) / 2).toLocaleString('es-AR')}</span>
+                </div>
+              )}
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', fontSize: '0.95rem' }}>
                 <span>Cargos de MercadoPago</span>
                 <span style={{ color: '#2e7d32', fontWeight: 'bold' }}>Bonificados</span>
@@ -246,10 +301,12 @@ const Checkout: React.FC = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-              <span style={{ fontSize: '1.2rem', color: '#333', fontWeight: 'bold' }}>Total</span>
+              <span style={{ fontSize: '1.2rem', color: '#333', fontWeight: 'bold' }}>{modalidadPago === 'seña' ? 'Monto de Seña' : 'Total'}</span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
                 <span style={{ fontSize: '0.9rem', color: '#777' }}>ARS</span>
-                <span style={{ fontSize: '1.8rem', fontWeight: '900', color: '#111' }}>${Number(selectedStand.precio).toLocaleString('es-AR')}</span>
+                <span style={{ fontSize: '1.8rem', fontWeight: '900', color: '#111' }}>
+                  ${(modalidadPago === 'seña' ? Number(selectedStand.precio) / 2 : Number(selectedStand.precio)).toLocaleString('es-AR')}
+                </span>
               </div>
             </div>
             
